@@ -1,7 +1,6 @@
-# demo
-调用桌面播放展示控件 UI demo
-
-##1.引入工程
+#WidgetPlayer
+调用WidgetPlayer UI实现可以在后台播放的demo
+#1.引入工程
 (1)将qwatchlib-release.aar放到工程目录对应的lib目录下
 (2)配置build.gradle进行引入
 
@@ -18,12 +17,12 @@ dependencies {
     ...
 }
 ```
-##2.初始化
+#2.初始化
 在Application onCreate的时候调用:
 ```java
 QWatch.init(this);
 ```
-##3.WidgetPlayer功能介绍
+#3.WidgetPlayer调用
 WidgetPlayer是一个在桌面上的一个播放展示控件,app后台播放媒体音乐时要获取到WidgetPlayer的焦点,这样可以在桌面上看到后台播放媒体信息,进行播放控制等操作.
 调用方式:
 ```java
@@ -111,15 +110,8 @@ private OnPlayWidgetEventListener mWidgetEventListener = new OnPlayWidgetEventLi
         public void onProgressUpdate(int i) {
 
         }
-
-        
-        /*
-         * 用户点击了播放控件,此时应用会被调用到前台
-         */
-        @Override
-        public void onWigetClick() {
-
-        }
+  
+       
     };
 
 
