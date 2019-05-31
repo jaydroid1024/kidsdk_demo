@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="btn_text">15sp</dimen>
+    <dimen name="btn_next_w">23dp</dimen>
+    <dimen name="btn_next_h">21dp</dimen>
+    <dimen name="btn_play_w">32dp</dimen>
+    <dimen name="btn_play_h">36dp</dimen>
+</resources>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:background="@color/gray">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/btn_text"/>
+
+    <ProgressBar
+        android:id="@+id/progress_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:max="100"
+        />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:layout_width="@dimen/btn_next_w"
+            android:layout_height="@dimen/btn_next_h"
+            android:onClick="preClick"
+            android:textSize="@dimen/btn_text"
+            android:background="@drawable/music_previous"
+            android:layout_centerVertical="true"
+            />
+
+        <CheckBox
+            android:id="@+id/check_play"
+            android:layout_width="@dimen/btn_play_w"
+            android:layout_height="@dimen/btn_play_h"
+            android:onClick="playClick"
+            android:textSize="@dimen/btn_text"
+            android:checked="false"
+            android:background="@drawable/btn_play"
+            android:layout_centerHorizontal="true"
+            android:button="@null"/>
+
+        <Button
+            android:layout_width="@dimen/btn_next_w"
+            android:layout_height="@dimen/btn_next_h"
+            android:onClick="nextClick"
+            android:textSize="@dimen/btn_text"
+            android:background="@drawable/music_next"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"/>
+    </RelativeLayout>
+</LinearLayout>
