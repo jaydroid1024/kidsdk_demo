@@ -5,6 +5,33 @@ WidgetPlayer
 
 1.引入工程
 -
+方式一:
+--
+(1)在工程的根目录下面的build.gradle中配置maven路径:
+```java
+
+...
+    allprojects {
+        repositories {
+            google()
+            jcenter()
+            maven { url "https://raw.githubusercontent.com/QihooKids/sdk/master" }
+        }
+    }
+```
+
+(2)在module中的build.gradle中进行引入:
+
+```java
+    ...
+    dependencies {
+        ...
+        implementation 'qihoo.kids:watch:0.0.1'
+        ...
+    }
+```
+方式二
+--
 (1)将qwatchlib-release.aar放到工程目录对应的lib目录下
 (2)配置build.gradle进行引入
 
