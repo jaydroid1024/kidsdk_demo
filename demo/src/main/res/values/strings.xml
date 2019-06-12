@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">sdk</string>
+    <string name="app_name">QihooKids</string>
     <string name="pre">上一首</string>
     <string name="play">播放</string>
     <string name="next">下一首</string>
