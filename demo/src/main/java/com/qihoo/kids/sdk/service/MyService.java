@@ -1,6 +1,8 @@
 package com.qihoo.kids.sdk.service;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -81,8 +83,20 @@ public class MyService extends Service implements OnPlayWidgetEventListener,OnSy
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        NotificationChannel channel = null;
         Notification.Builder builder = new Notification.Builder(this);
         builder.setContentTitle("Test");
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            channel = new NotificationChannel(TAG, TAG, NotificationManager.IMPORTANCE_LOW);
+            NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            if (manager == null) {
+                stopSelf();
+                return super.onStartCommand(intent, flags, startId);
+            }
+            manager.createNotificationChannel(channel);
+            builder.setChannelId(TAG);
+        }
+
         startForeground(FOREGROUND_ID, builder.build());
         requestPlayerWidget();
         return super.onStartCommand(intent, flags, startId);
@@ -352,7 +366,9 @@ public class MyService extends Service implements OnPlayWidgetEventListener,OnSy
     public void onDestroy() {
         mPlayer.exit();
         mReceivers.clear();
-        mWidgetPlayer.releaseFocus();
+        if(mWidgetPlayer != null) {
+            mWidgetPlayer.releaseFocus();
+        }
         super.onDestroy();
     }
 }

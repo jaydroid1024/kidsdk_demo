@@ -237,6 +237,10 @@ public class Player implements OnBufferingUpdateListener, OnCompletionListener, 
 
     // 暂停
     public void pause() {
+        if(mediaPlayer == null){
+            return;
+        }
+
         if (mediaPlayer.isPlaying()) {
             mediaPlayer.pause();
         }

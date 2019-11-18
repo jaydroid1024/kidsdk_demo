@@ -3,6 +3,7 @@
     package="com.qihoo.kids.sdk">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
     <application
         android:name=".TestApp"
         android:allowBackup="true"
