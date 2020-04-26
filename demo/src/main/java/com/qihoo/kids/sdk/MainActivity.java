@@ -6,6 +6,7 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.view.DragEvent;
 import android.view.View;
@@ -19,7 +20,7 @@ import com.qihoo.kids.sdk.player.Song;
 import com.qihoo.kids.sdk.service.MyService;
 import com.qihoo.kids.sdk.util.LogUtil;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends FragmentActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private IPlayer mPlayer;
