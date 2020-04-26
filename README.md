@@ -1,7 +1,4 @@
-WidgetPlayer
-=
 
-调用WidgetPlayer UI实现可以在后台播放的demo
 
 1.引入工程
 -
@@ -26,7 +23,7 @@ WidgetPlayer
     ...
     dependencies {
         ...
-        implementation 'qihoo.kids:watch:0.0.2'
+        implementation 'qihoo.kids:watch:0.0.3'
         ...
     }
 ```
@@ -48,13 +45,23 @@ dependencies {
     ...
 }
 ```
-2.初始化
+获取设备绑定id
+-
+//获取手表绑定后的唯一设备id，此id只有手表激活后才会返回
+String deviceID = QWatch.getDeviceID(context)
+
+-
+WidgetPlayer
+-
+
+调用WidgetPlayer UI实现可以在后台播放的demo
+1.初始化
 -
 在Application onCreate的时候调用:
 ```java
 QWatch.init(this);
 ```
-3.WidgetPlayer调用
+2.WidgetPlayer调用
 -
 WidgetPlayer是一个在桌面上的一个播放展示控件,app后台播放媒体音乐时要获取到WidgetPlayer的焦点,这样可以在桌面上看到后台播放媒体信息,进行播放控制等操作.
 调用方式:
