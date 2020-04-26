@@ -48,6 +48,7 @@ dependencies {
 获取设备绑定id
 -
 //获取手表绑定后的唯一设备id，此id只有手表激活后才会返回
+
 String deviceID = QWatch.getDeviceID(context)
 
 -
