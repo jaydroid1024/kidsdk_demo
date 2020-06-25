@@ -3,6 +3,7 @@ package com.qihoo.kids.sdk;
 import android.app.Application;
 import android.content.Intent;
 import android.os.Build;
+import android.util.Log;
 
 import com.qihoo.kids.sdk.service.MyService;
 import com.qihoo.kids.sdk.util.LogUtil;
@@ -18,7 +19,7 @@ public class TestApp extends Application {
         super.onCreate();
         //需要在Application 启动的时候后进行初始化
         QWatch.init(this);
-        LogUtil.d(TAG, "device_id="+QWatch.getDeviceID(getApplicationContext()));
+        Log.e(TAG, "device_id="+QWatch.getDeviceID(getApplicationContext()));
         if(Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
             startService(new Intent(this, MyService.class));
         } else {
