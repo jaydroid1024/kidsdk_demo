@@ -12,7 +12,7 @@
         repositories {
             google()
             jcenter()
-            maven { url "https://raw.githubusercontent.com/QihooKids/sdk/master" }
+            maven { url "http://maven.geelib.360.cn/nexus/repository/QihooWear/" }
         }
     }
 ```
