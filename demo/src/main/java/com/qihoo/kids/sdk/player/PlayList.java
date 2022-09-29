@@ -8,9 +8,9 @@ public class PlayList {
     int mIndex;
 
     public PlayList(){
-        mList.add(new Song("http://file.kuyinyun.com/group1/M00/90/B7/rBBGdFPXJNeAM-nhABeMElAM6bY151.mp3", "当你老了", 48*1000));
-        mList.add(new Song("http://music.163.com/song/media/outer/url?id=281951.mp3", "我曾用心爱着你", 4*60*1000+25*1000));
-        mList.add(new Song("http://music.163.com/song/media/outer/url?id=299601.mp3", "笑忘书", 2*60*1000+5*1000));
+        mList.add(new Song("http://music.163.com/song/media/outer/url?id=447925558.mp3", "DJ测试音乐1111", 35*1000));
+        mList.add(new Song("http://music.163.com/song/media/outer/url?id=447925558.mp3", "DJ测试音乐2222", 35*1000));
+        mList.add(new Song("http://music.163.com/song/media/outer/url?id=447925558.mp3", "DJ测试音乐3333", 35*1000));
     }
 
 

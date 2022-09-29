@@ -41,7 +41,7 @@ repositories {
 
 dependencies {
     ...
-    api(name: 'qwatchlib', ext: 'aar')
+    api(name: 'watch-0.0.6', ext: 'aar')
     ...
 }
 ```
