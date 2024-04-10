@@ -28,7 +28,7 @@ dependencies {
 //    implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
     implementation 'com.android.support:appcompat-v7:28.0.0'
     //1. 全量依赖包引入
-    implementation(name: 'watch-0.0.7', ext: 'aar')
+//    implementation(name: 'watch-0.0.7', ext: 'aar')
 
     //2. 单独引入主SDK和依赖包，用以解决依赖冲突问题
     implementation(name: 'watch-0.0.7-single', ext: 'aar')

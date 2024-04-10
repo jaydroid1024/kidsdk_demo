@@ -19,22 +19,22 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-
-        <!-- todo 用于测试获取后台免杀权的页面-->
-<!--        <activity android:name=".TestBackActivity">-->
+<!--        <activity android:name=".MainActivity">-->
 <!--            <intent-filter>-->
 <!--                <action android:name="android.intent.action.MAIN" />-->
 
 <!--                <category android:name="android.intent.category.LAUNCHER" />-->
 <!--            </intent-filter>-->
 <!--        </activity>-->
+
+        <!-- todo 用于测试获取后台免杀权的页面-->
+        <activity android:name=".TestBackActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
     </application>
 
