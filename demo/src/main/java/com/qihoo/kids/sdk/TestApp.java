@@ -20,10 +20,6 @@ public class TestApp extends Application {
         //需要在Application 启动的时候后进行初始化
         QWatch.init(this);
         Log.e(TAG, "device_id="+QWatch.getDeviceID(getApplicationContext()));
-        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
-            startService(new Intent(this, MyService.class));
-        } else {
-            startForegroundService(new Intent(this, MyService.class));
-        }
+
     }
 }

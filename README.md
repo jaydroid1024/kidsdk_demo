@@ -1,9 +1,10 @@
 
 
-1.引入工程
--
-方式一:
---
+## 一，引入工程
+
+
+
+### 方式一（仅v0.0.6版本）:
 (1)在工程的根目录下面的build.gradle中配置maven路径:
 ```java
 
@@ -27,8 +28,10 @@
         ...
     }
 ```
-方式二
---
+
+
+### 方式二
+
 (1)将qwatchlib-release.aar放到工程目录对应的lib目录下
 (2)配置build.gradle进行引入
 
@@ -41,10 +44,19 @@ repositories {
 
 dependencies {
     ...
-    api(name: 'watch-0.0.6', ext: 'aar')
+    //1. 全量依赖包引入
+    implementation(name: 'watch-0.0.7', ext: 'aar')
+
+    //2. 单独引入主SDK和依赖包，用以解决依赖冲突问题
+    implementation(name: 'watch-0.0.7-single', ext: 'aar')
+    implementation(name: 'PersistentConnManager', ext: 'jar')
+    implementation(name: 'QihooLoggerManager', ext: 'jar')
+    implementation(name: 'QOpenSdkLib_AppSDKBaseLib', ext: 'jar')
     ...
 }
 ```
+上面的两种AAR 依赖方式人选其一
+
 (3)混淆配置
 
 ```java
@@ -55,21 +67,29 @@ dependencies {
 ```
 
 
--
-WidgetPlayer
--
+
+
+
+## 二，WidgetPlayer
+
+
 
 调用WidgetPlayer UI实现可以在后台播放的demo
-1.初始化
--
+
+### 1.初始化
+
+
 在Application onCreate的时候调用:
+
 ```java
 QWatch.init(this);
 ```
-2.WidgetPlayer调用
--
+### 2.WidgetPlayer调用
+
+
 WidgetPlayer是一个在桌面上的一个播放展示控件,app后台播放媒体音乐时要获取到WidgetPlayer的焦点,这样可以在桌面上看到后台播放媒体信息,进行播放控制等操作.
 调用方式:
+
 ```java
 
 ...
@@ -161,3 +181,104 @@ private OnPlayWidgetEventListener mWidgetEventListener = new OnPlayWidgetEventLi
 
 
 ```
+
+
+
+
+
+## 三，获取后台免杀权（v0.0.7之后支持）
+
+调用 **setAllowAppIfBackground（true）** 实现可以退出后台后不被系统查杀，
+
+### 1.初始化
+
+
+
+在Application onCreate的时候调用:
+
+```java
+QWatch.init(this);
+```
+
+
+
+### 2.申请后台免杀权
+
+```java
+QWatch.setAllowAppIfBackground(true);
+```
+
+
+
+### 3.释放后台免杀权
+
+```java
+QWatch.setAllowAppIfBackground(false);
+```
+
+
+
+### 4.以选相册为例测试代码
+
+```java
+/**
+ * 测试 360 儿童手表退出后台后免杀的 Demo
+ */
+public class TestBackActivity extends FragmentActivity {
+
+    private static final String TAG = TestBackActivity.class.getSimpleName();
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        setContentView(R.layout.activity_back);
+
+        //1. 初始化 QWatch SDK
+//        QWatch.init(this); TestApp中已经调用
+        //2. 申请后台免杀权
+        QWatch.setAllowAppIfBackground(true);
+
+        initView();
+    }
+
+    private void initView() {
+        TextView tvObtainBgWhitelistPermissions = findViewById(R.id.tv_obtain_bg_whitelist_permissions);
+        tvObtainBgWhitelistPermissions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startPickImageActivity();
+            }
+        });
+    }
+
+    private void startPickImageActivity() {
+        String ACTION_PICK_PHOTO = "com.qihoo.kids.gallery.ACTION_PICK";
+        String KEY_PICK_FROM_CAMERA_ENABLE = "PICK_FROM_CAMERA_ENABLE";
+        int REQUEST_CODE_PICK_IMAGE = 1000;
+        String KEY_EXTRA_ACTION_TYPE = "key_extra_action_type";
+        int OK = 0;
+        try {
+            Intent intent = new Intent(ACTION_PICK_PHOTO);
+            intent.setType("image/*");
+            intent.putExtra(KEY_PICK_FROM_CAMERA_ENABLE, true);
+            intent.putExtra(KEY_EXTRA_ACTION_TYPE, OK);
+            startActivityForResult(intent, REQUEST_CODE_PICK_IMAGE);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(TAG, "startPickerImage: e= " + e.getMessage());
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //3. 释放后台免杀权
+        QWatch.setAllowAppIfBackground(false);
+    }
+    
+}
+```
+
+
+

@@ -3,11 +3,12 @@ package com.qihoo.kids.sdk;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.DragEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -20,12 +21,16 @@ import com.qihoo.kids.sdk.player.Song;
 import com.qihoo.kids.sdk.service.MyService;
 import com.qihoo.kids.sdk.util.LogUtil;
 
+/**
+ * 测试 360 儿童手表播放控件的 Demo
+ */
 public class MainActivity extends FragmentActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private IPlayer mPlayer;
     private CheckBox vPlayCheck;
     private TextView vTitle;
+    private TextView tvObtainBgWhitelistPermissions;
     private ProgressBar vProgress;
 
     @Override
@@ -33,14 +38,46 @@ public class MainActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(R.layout.activity_main);
+
+        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+            startService(new Intent(this, MyService.class));
+        } else {
+            startForegroundService(new Intent(this, MyService.class));
+        }
+
         bindService(new Intent(this, MyService.class), mServiceConnection, 0);
         initView();
     }
 
+    private void startPickImageActivity() {
+        String ACTION_PICK_PHOTO = "com.qihoo.kids.gallery.ACTION_PICK";
+        String KEY_PICK_FROM_CAMERA_ENABLE = "PICK_FROM_CAMERA_ENABLE";
+        int REQUEST_CODE_PICK_IMAGE = 1000;
+        String KEY_EXTRA_ACTION_TYPE = "key_extra_action_type";
+        int OK = 0;
+        try {
+            Intent intent = new Intent(ACTION_PICK_PHOTO);
+            intent.setType("image/*");
+            intent.putExtra(KEY_PICK_FROM_CAMERA_ENABLE, true);
+            intent.putExtra(KEY_EXTRA_ACTION_TYPE, OK);
+            startActivityForResult(intent, REQUEST_CODE_PICK_IMAGE);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(TAG, "startPickerImage: e= " + e.getMessage());
+        }
+    }
+
     private void initView() {
         vPlayCheck = findViewById(R.id.check_play);
+        tvObtainBgWhitelistPermissions = findViewById(R.id.tv_obtain_bg_whitelist_permissions);
         vTitle = findViewById(R.id.title);
         vProgress = findViewById(R.id.progress_horizontal);
+        tvObtainBgWhitelistPermissions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startPickImageActivity();
+            }
+        });
 
         vProgress.setOnDragListener(new View.OnDragListener() {
             @Override
@@ -91,7 +128,7 @@ public class MainActivity extends FragmentActivity {
 
     @Override
     protected void onDestroy() {
-        if(mPlayer != null){
+        if (mPlayer != null) {
             try {
                 mPlayer.unregistStateListener(mPlayListenerStub);
             } catch (RemoteException e) {
@@ -128,19 +165,19 @@ public class MainActivity extends FragmentActivity {
     private IPlayStateListener mPlayListenerStub = new IPlayStateListener.Stub() {
         @Override
         public void onStateChange(boolean b) throws RemoteException {
-            LogUtil.d(TAG, "onStateChange:"+b);
+            LogUtil.d(TAG, "onStateChange:" + b);
             vPlayCheck.setChecked(b);
         }
 
         @Override
         public void onSongChanged(Song song) throws RemoteException {
-            LogUtil.d(TAG, "onSongChanged:"+song);
+            LogUtil.d(TAG, "onSongChanged:" + song);
             vTitle.setText(song.getTitle());
         }
 
         @Override
         public void onProgressChange(int max, int progress) throws RemoteException {
-            LogUtil.d(TAG, "onProgressChange:"+progress);
+            LogUtil.d(TAG, "onProgressChange:" + progress);
             if (vProgress.getMax() != max) {
                 vProgress.setMax(max);
             }
